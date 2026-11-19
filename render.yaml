@@ -1,0 +1,14 @@
+# Free public website on Render: render.com → New → Blueprint → pick this GitHub repo. No keys needed.
+services:
+  - type: web
+    name: credit-nexus
+    runtime: python
+    plan: free
+    buildCommand: pip install -r backend/requirements.txt
+    startCommand: cd backend && uvicorn main:app --host 0.0.0.0 --port $PORT
+    healthCheckPath: /api/status
+    envVars:
+      - key: CN_PUBLIC
+        value: "1"
+      - key: PYTHON_VERSION   # Render's default is 3.14; pin a version all dependencies support
+        value: "3.12.8"

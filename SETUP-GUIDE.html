@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Credit Nexus — Setup Guide</title>
+<style>
+:root{--ac:#0f766e;--bd:#e2e8f0;--mu:#475569}
+*{box-sizing:border-box}body{margin:0;background:#f8fafc;color:#0f172a;font:15px/1.7 system-ui,-apple-system,"Segoe UI",sans-serif}
+header{background:#0b0f14;color:#e6edf3;padding:32px 20px;text-align:center}header h1{margin:0;font-size:24px;letter-spacing:1px}header h1 span{color:#14b8a6}
+header p{margin:6px 0 0;color:#94a3b8;font-size:13px}
+main{max-width:720px;margin:0 auto;padding:24px 16px 60px}
+h2{color:var(--ac);font-size:20px;margin:36px 0 10px;padding-top:16px;border-top:1px solid var(--bd)}
+.card{background:#fff;border:1px solid var(--bd);border-radius:10px;padding:18px 20px;margin:12px 0}
+ol{padding-left:22px}li{margin:6px 0}
+code{background:#f1f5f9;color:#0f766e;padding:1px 6px;border-radius:4px;font:13px ui-monospace,Consolas,monospace}
+.plain{background:#f1f5f9;border-left:3px solid var(--ac);padding:10px 14px;border-radius:6px;font-size:14px;color:var(--mu);margin:10px 0}
+.warn{background:#fffbeb;border:1px solid #fcd34d;color:#92400e;border-radius:8px;padding:10px 14px;margin:10px 0;font-size:14px}
+.ok{background:#ecfdf5;border:1px solid #6ee7b7;color:#065f46;border-radius:8px;padding:10px 14px;margin:10px 0;font-size:14px}
+table{width:100%;border-collapse:collapse;font-size:14px;background:#fff}th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--bd)}th{background:#0f766e;color:#fff;font-size:12px}
+a{color:var(--ac)}
+</style></head><body>
+<header><h1>CREDIT <span>NEXUS</span></h1><p>Setup guide for non-technical users · about 5 minutes the first time</p></header>
+<main>
+
+<h2>1. What this is</h2>
+<div class="card">You type a company name. The tool pulls that company's real financial statements from the internet, then calculates a credit score, a stress test, the chance of default, and warning flags. An AI then writes short commentary — anything written by AI is marked <b>“AI — verify”</b>.</div>
+<div class="plain"><b>In plain words:</b> it is a small website that runs only on your own computer. Nothing is uploaded except the questions sent to the AI service you choose.</div>
+
+<h2>2. Pick how to open it</h2>
+<div class="card"><b>A. Website link</b> (if someone shared one) — just open it. Nothing to install. Skip to section 4.</div>
+<div class="card"><b>B. Desktop app</b> — one file called <code>CreditNexus.exe</code> (Mac/Linux: <code>CreditNexus</code>).
+<ol><li>Save it anywhere, e.g. your Desktop.</li><li>Double-click it.</li><li>A black window opens; after ~10 seconds your browser opens the dashboard.</li></ol>
+Nothing else to install — Python and everything it needs are packed inside the file.</div>
+<div class="warn">Windows may show “Windows protected your PC”. Click <b>More info</b> → <b>Run anyway</b>. This appears for any new program that isn't signed with a paid certificate. On Mac: right-click the file → <b>Open</b> → <b>Open</b>.</div>
+<div class="plain"><b>Why a black window?</b> It is the engine that serves the dashboard to your browser. <b>Keep it open</b> while you use the tool; close it to stop.</div>
+<div class="card"><b>C. From source</b> (only if you were given the folder, not the file): install Python from <a href="https://python.org/downloads" target="_blank">python.org</a> ticking <b>“Add python.exe to PATH”</b>, unzip the folder, double-click <b>START.bat</b> (Mac/Linux: <code>bash start.sh</code>).</div>
+
+<h2>3. Who makes the app file / website?</h2>
+<div class="card">Whoever shares the tool does this once (details in README.md): put the folder on GitHub, and GitHub builds the Windows/Mac/Linux app files automatically; connect the same folder to Render (free) for the website link. Everyone else just uses the file or the link.</div>
+
+<h2>4. No setup needed</h2>
+<div class="ok">There is no account, password or key to enter. The AI part uses Pollinations' free service, which needs no signup.</div>
+<div class="plain"><b>Why does the AI part take 30–90 seconds?</b> The free AI service answers one request every 30 seconds. The tool asks it once per company and fills all AI sections from that one answer. Everything based on real data (numbers, score, stress test, warnings) appears straight away.</div>
+
+<h2>5. Using it</h2>
+<div class="card"><ol><li>Type a company or ticker, e.g. <code>TCS</code>, <code>Reliance Industries</code>, <code>AAPL</code>, <code>HSBA.L</code>. Covers US, UK and Indian companies: London tickers end in <code>.L</code>, India <code>.NS</code>, US tickers have no ending. Use the <b>market</b> menu next to the search box to restrict matches. The bar under the header shows what your search matched — e.g. “hsbc” → HSBA.L · HSBC Holdings plc — and lets you switch to the company's other listings.</li>
+<li>Click <b>ANALYZE</b>. Numbers, score and warnings appear within 10–40 seconds; the AI sections (Credit commentary, Outlook, Debt notes, Risk, Industry, Governance, Peers, news sentiment) fill in about 30–90 seconds after that, from a single AI request.</li>
+<li>Use the tabs: Overview, Financials, Ratios, Credit, Stress, Warnings, Outlook, Debt, Shareholding, Team, Comps, Risk, Industry, News.</li></ol>
+The grey bar under the header shows <b>which sources answered</b> (green) and which failed (orange). Amounts are in the company's own reporting currency (Indian companies in ₹ Crore).</div>
+<table><tr><th>Badge</th><th>Meaning</th></tr><tr><td><b style="color:#16a34a">LIVE DATA</b></td><td>Taken from Yahoo Finance / NSE, or calculated from it.</td></tr><tr><td><b style="color:#7c3aed">AI — verify</b></td><td>Written by AI. Check it before relying on it.</td></tr></table>
+
+<h2>6. Every day after</h2>
+<div class="ok">Desktop app: double-click the file. Website: open the link. Close the black window when finished (app only).</div>
+
+<h2>7. If something goes wrong</h2>
+<div class="card"><b>First, always:</b> click <b>Health</b> (top right of the dashboard) → <b>Auto-repair</b>. It installs missing parts and tells you in plain words what is still wrong.</div>
+<table><tr><th>You see</th><th>Do this</th></tr>
+<tr><td>Website takes ~1 minute to load</td><td>Free hosting sleeps when unused; it wakes on the first visit.</td></tr><tr><td>“Python not found” (option C only)</td><td>Reinstall Python with “Add python.exe to PATH” ticked — or use the app file instead.</td></tr>
+<tr><td>Browser says “can't reach this page”</td><td>The black window was closed or is still starting. Wait 10 s and refresh; otherwise double-click START.bat again.</td></tr>
+<tr><td>“Yahoo Finance could not be reached”</td><td>Office networks sometimes block it. Try home Wi-Fi or ask IT to allow <code>*.finance.yahoo.com</code>.</td></tr>
+<tr><td>“was not found on Yahoo Finance”</td><td>Type the exact ticker, e.g. <code>TATAMOTORS.NS</code>.</td></tr>
+
+<tr><td>“Free AI is busy” or AI sections empty</td><td>Wait 30–60 seconds and press <b>Retry</b>. Data, scores and warnings still work.</td></tr></table>
+<div class="plain">The black window also <b>restarts the tool by itself</b> if it crashes — you'll see a line starting with “!!”.</div>
+
+<h2>8. Remove it</h2>
+<div class="card">Delete the app file (or the <code>credit-nexus</code> folder). Website: nothing to remove.</div>
+
+<p style="font-size:12px;color:#64748b;text-align:center;margin-top:40px">Credit Nexus · for research and education · not investment advice</p>
+</main></body></html>
