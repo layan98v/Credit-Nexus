@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Credit Nexus — System Health</title>
+<style>
+:root{--bg:#0b0f14;--card:#121821;--bd:#243041;--tx:#e6edf3;--mu:#94a3b8;--dim:#64748b;--ac:#14b8a6;--ok:#22c55e;--err:#ef4444;--warn:#f59e0b}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--tx);font-family:system-ui,-apple-system,"Segoe UI",sans-serif;padding:16px}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:12px;padding:24px;max-width:680px;margin:0 auto}
+h1{font-size:18px;font-weight:800}h1 span{color:var(--ac)}.sub{font-size:12px;color:var(--dim);margin:4px 0 16px}
+.row{padding:9px 0;border-bottom:1px solid var(--bd);font-size:13px}
+.row .top{display:flex;justify-content:space-between;gap:12px}.row .n{color:var(--mu);white-space:nowrap}
+.row .v{text-align:right;word-break:break-word}.fix{font-size:12px;color:var(--warn);margin-top:3px}
+.ok{color:var(--ok)}.warn{color:var(--warn)}.error{color:var(--err)}.skip{color:var(--dim)}
+.sum{margin-top:14px;padding:12px;border-radius:8px;text-align:center;font-weight:700}
+.good{background:#22c55e1a;color:var(--ok)}.bad{background:#ef44441a;color:var(--err)}
+button{border:none;border-radius:6px;padding:9px 18px;font-weight:700;cursor:pointer;margin:14px 8px 0 0}
+.p{background:var(--ac);color:#04201d}.s{background:transparent;border:1px solid var(--bd);color:var(--mu)}
+a{color:var(--ac);font-size:13px;display:inline-block;margin-top:14px}
+</style></head><body>
+<div class="card">
+<h1>CREDIT <span>NEXUS</span> · Health</h1>
+<div class="sub">Live test of every component. Auto-repair installs missing packages and clears caches.</div>
+<div id="out">Running diagnostics…</div>
+<button class="p" id="rep">Auto-repair</button><button class="s" id="rerun">Re-run</button><button class="s" id="ai">Test AI too</button>
+<a href="/">← Dashboard</a>
+</div>
+<script>
+const out=document.getElementById('out');
+const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+async function run(ai){
+  out.textContent='Running diagnostics… (up to ~60s, it makes real network calls)';
+  try{
+    const d=await (await fetch('/api/diagnose'+(ai?'?ai=true':''))).json();
+    const ic={ok:'✅',warn:'⚠️',error:'❌',skip:'⏭️'};
+    out.innerHTML=d.results.map(r=>`<div class="row"><div class="top"><span class="n">${ic[r.status]||''} ${esc(r.component)}</span><span class="v ${r.status}">${esc(r.detail)}</span></div>${r.fix?`<div class="fix">Fix: ${esc(r.fix)}</div>`:''}</div>`).join('')+
+      `<div class="sum ${d.summary.errors?'bad':'good'}">${d.summary.errors?d.summary.errors+' problem(s) need attention':'All essential systems working'} · ✅${d.summary.ok} ⚠️${d.summary.warnings} ❌${d.summary.errors}</div>`;
+  }catch(e){out.innerHTML='<div class="error">Cannot reach the local server. Restart it with START.bat / start.sh.</div>'}
+}
+document.getElementById('rerun').onclick=()=>run(false);document.getElementById('ai').onclick=()=>run(true);
+document.getElementById('rep').onclick=async()=>{
+  out.textContent='Repairing…';
+  try{const d=await (await fetch('/api/repair',{method:'POST'})).json();out.innerHTML=d.actions.map(a=>`<div class="row">→ ${esc(a)}</div>`).join('');setTimeout(run,1500)}
+  catch(e){out.innerHTML='<div class="error">Repair request failed.</div>'}
+};
+run();
+</script></body></html>
